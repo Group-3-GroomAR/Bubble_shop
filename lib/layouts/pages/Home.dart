@@ -41,7 +41,7 @@ class MyAppState extends State<MyApphome>{
       visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Scaffold(
-        appBar: AppBar(title:Text('Bubble'),),
+        //appBar: AppBar(title:Text('Bubble'),),
         body: _pageOptions[_selectedPage],
         bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.shifting,
