@@ -1,5 +1,6 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
+import 'package:parallax_image/parallax_image.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -11,6 +12,7 @@ class Profile extends StatefulWidget {
 
 
 }
+
 
 class Profilestate extends State<Profile>{
   @override
@@ -106,7 +108,10 @@ class Profilestate extends State<Profile>{
                    children: <Widget>[
                      Column(
                        children: <Widget>[
-                         Icon(Icons.assignment_ind),
+                         Icon(
+                           Icons.assignment_ind,
+
+                         ),
                        ],),
                      Column(
                        children: <Widget>[
@@ -177,7 +182,15 @@ class Profilestate extends State<Profile>{
                    style: TextStyle(fontWeight: FontWeight.w500),
 
                  ),
-                 Container(),
+                 SizedBox(height: 10),
+                 Container(
+                   padding: const EdgeInsets.symmetric(vertical: 0.0),
+                   constraints: const BoxConstraints(maxHeight: 200.0),
+                   child: new ListView.builder(
+                     scrollDirection: Axis.horizontal,
+                     itemBuilder: _buildHorizontalChild,
+                   ),
+                 ),
 
                ],
              ),
@@ -196,7 +209,13 @@ class Profilestate extends State<Profile>{
                  style: TextStyle(fontWeight: FontWeight.w500),
 
                ),
-               Container()
+               Row(
+                 children: <Widget>[
+
+
+                 ],
+
+               ),
              ],
            ),
 
@@ -228,4 +247,18 @@ class Profilestate extends State<Profile>{
 
   }
 
+}
+
+Widget _buildHorizontalChild(BuildContext context, int index) {
+    index++;
+    if (index > 7) return null;
+    return new Padding(
+      padding: const EdgeInsets.only(right: 5.0),
+      child: new ParallaxImage(
+        extent: 250.0,
+        image: new ExactAssetImage(
+          'assets/images/image$index.jpg',
+        ),
+      ),
+    );
 }
