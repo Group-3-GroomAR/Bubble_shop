@@ -50,7 +50,12 @@ class MyAppState extends State<MyApphome>{
           child: Icon(Icons.center_focus_strong,color:createMaterialColor(Color(0xFF674ea7))),
           backgroundColor: Colors.white,
           elevation:30 ,
-          onPressed: (){},
+          onPressed: (){
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Scan()),
+            );
+          },
 
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -73,16 +78,16 @@ class MyAppState extends State<MyApphome>{
 
       //Second one
         bottomNavigationBar: BottomAppBar(
+
           child: IconTheme(
             data: IconThemeData(color:
             Theme.of(context).colorScheme.onPrimary),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisSize: MainAxisSize.max,
               children: [
                 IconButton(
-
                   icon: Icon(Icons.home),
                   onPressed: (){
                     setState(() {
@@ -96,13 +101,13 @@ class MyAppState extends State<MyApphome>{
 //                  icon: Icon(Icons.add_location),
 //                  onPressed: (){},
 //                ),
-         //     Spacer(),
-                IconButton(
-
-                  icon: Icon(Icons.audiotrack),
-                  onPressed: (){},
-                ),
-          //      Spacer(),
+            // Spacer(),
+//                IconButton(
+//
+//                  icon: Icon(Icons.audiotrack),
+//                  onPressed: (){},
+//                ),
+          // Spacer(),
                 IconButton(
 
                   icon: Icon(Icons.settings),
