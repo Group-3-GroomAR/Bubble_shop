@@ -1,4 +1,5 @@
 
+import 'package:bubble_saloon/layouts/pages/S_home.dart';
 import 'package:bubble_saloon/layouts/pages/Settings.dart';
 
 import 'package:flutter/material.dart';
@@ -20,14 +21,16 @@ class MyApphome extends StatefulWidget {
 
 
 class MyAppState extends State<MyApphome>{
-
-  int _selectedPage =0;
+  Color _iconColor = Colors.white;
+  Color _back_col =createMaterialColor(Color(0xFF674ea7));
+  Color _mpurple=createMaterialColor(Color(0xFF674ea7));
+  int _selectedPage =4;
   final _pageOptions = [
        Profile(),
        Calendar(),
        Scan(),
-    Settings()
-
+       Settings(),
+       SaloonHome()
 
 
   ];
@@ -80,8 +83,7 @@ class MyAppState extends State<MyApphome>{
         bottomNavigationBar: BottomAppBar(
 
           child: IconTheme(
-            data: IconThemeData(color:
-            Theme.of(context).colorScheme.onPrimary),
+            data: IconThemeData(color:_back_col),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -89,11 +91,16 @@ class MyAppState extends State<MyApphome>{
               children: [
                 IconButton(
                   icon: Icon(Icons.home),
+                  color: Colors.white,
                   onPressed: (){
                     setState(() {
-                      _selectedPage=0;
+                      _selectedPage=4;
+                      _back_col = Colors.white;
+                      _iconColor = _mpurple;
                     });
                   },
+                  splashColor: Colors.purple[50],
+
                 ),
                // Spacer(),
 //                IconButton(
@@ -109,13 +116,16 @@ class MyAppState extends State<MyApphome>{
 //                ),
           // Spacer(),
                 IconButton(
-
+                  color: Colors.white,
                   icon: Icon(Icons.settings),
                   onPressed: (){
                   setState(() {
                   _selectedPage=3;
+                  _back_col = Colors.white;
+                  _iconColor = _mpurple;
                      });
                   },
+                  splashColor: Colors.purple[50],
                 )
               ],
             ),

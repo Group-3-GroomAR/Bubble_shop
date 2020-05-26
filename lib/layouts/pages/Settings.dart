@@ -1,6 +1,7 @@
 import 'package:bubble_saloon/layouts/pages/About.dart';
 import 'package:bubble_saloon/layouts/pages/Appointments/Calendar.dart';
 import 'package:bubble_saloon/layouts/pages/Help.dart';
+import 'package:bubble_saloon/layouts/pages/Profile.dart';
 import 'package:flutter/material.dart';
 
 
@@ -36,10 +37,15 @@ class Settings extends StatelessWidget {
                 children: <Widget>[
                   ListTile(
                     leading: CircleAvatar(
-                       backgroundImage: NetworkImage('https://www.woolha.com/media/2020/03/eevee.png'),
+                       backgroundImage: AssetImage('assets/images/prof.jpg')
                     ),
                     title: Text("Beauty Salon"),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) =>Profile()),
+                      );
+                    },
                   ),
                   _buildDivider(),
                   ListTile(
@@ -54,6 +60,11 @@ class Settings extends StatelessWidget {
                   ),
                   ListTile(
                     title: Text("Offers/Events"),
+                    onTap: () {},
+                    trailing: Icon(Icons.arrow_right),
+                  ),
+                  ListTile(
+                    title: Text("Check Summary"),
                     onTap: () {},
                     trailing: Icon(Icons.arrow_right),
                   ),

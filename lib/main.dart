@@ -2,7 +2,7 @@ import 'package:bubble_saloon/layouts/pages/Home.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MyApphome());
 }
 
 class MyApp extends StatelessWidget {
