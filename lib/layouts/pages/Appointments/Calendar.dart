@@ -107,45 +107,7 @@ class calState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
-    /// Example with custom icon
-//    _calendarCarousel = CalendarCarousel<Event>(
-//      onDayPressed: (DateTime date, List<Event> events) {
-//        this.setState(() => _currentDate = date);
-//        events.forEach((event) => print(event.title));
-//      },
-//      weekendTextStyle: TextStyle(
-//        color: Colors.red,
-//      ),
-//      thisMonthDayBorderColor: Colors.grey,
-////          weekDays: null, /// for pass null when you do not want to render weekDays
-//      headerText: 'Custom Header',
-//      weekFormat: true,
-//      markedDatesMap: _markedDateMap,
-//      height: 200.0,
-//      selectedDateTime: _currentDate2,
-//      showIconBehindDayText: true,
-////          daysHaveCircularBorder: false, /// null for not rendering any border, true for circular border, false for rectangular border
-//      customGridViewPhysics: NeverScrollableScrollPhysics(),
-//      markedDateShowIcon: true,
-//      markedDateIconMaxShown: 2,
-//      selectedDayTextStyle: TextStyle(
-//        color: Colors.yellow,
-//      ),
-//      todayTextStyle: TextStyle(
-//        color: Colors.blue,
-//      ),
-//      markedDateIconBuilder: (event) {
-//        return event.icon;
-//      },
-//      minSelectedDate: _currentDate.subtract(Duration(days: 360)),
-//      maxSelectedDate: _currentDate.add(Duration(days: 360)),
-//      todayButtonColor: Colors.transparent,
-//      todayBorderColor: Colors.green,
-//      markedDateMoreShowTotal:
-//      true, // null for not showing hidden events indicator
-////          markedDateIconMargin: 9,
-////          markedDateIconOffset: 3,
-//    );
+
 
     /// Example Calendar Carousel without header and custom prev & next button
     _calendarCarouselNoHeader = CalendarCarousel<Event>(
@@ -185,10 +147,12 @@ class calState extends State<Calendar> {
       // },
       // markedDateMoreShowTotal:
       //     true,
-      todayButtonColor: Colors.purple[100],
+      todayButtonColor: Colors.deepPurple[50],
       selectedDayTextStyle: TextStyle(
-        color: Colors.purple[100],
+        color: Colors.purple[400],
       ),
+      selectedDayButtonColor: Colors.purple[100],
+      selectedDayBorderColor: Colors.purple[400],
       minSelectedDate: _currentDate.subtract(Duration(days: 360)),
       maxSelectedDate: _currentDate.add(Duration(days: 360)),
       prevDaysTextStyle: TextStyle(
@@ -196,7 +160,7 @@ class calState extends State<Calendar> {
         color: Colors.pinkAccent,
       ),
       inactiveDaysTextStyle: TextStyle(
-        color: Colors.tealAccent,
+        color: Colors.purple,
         fontSize: 16,
       ),
       onCalendarChanged: (DateTime date) {
