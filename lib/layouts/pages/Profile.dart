@@ -1,4 +1,5 @@
 import 'package:flutter/animation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:parallax_image/parallax_image.dart';
 
@@ -8,11 +9,7 @@ class Profile extends StatefulWidget {
     return Profilestate();
 
   }
-
-
-
 }
-
 
 class Profilestate extends State<Profile>{
   @override
@@ -44,8 +41,14 @@ class Profilestate extends State<Profile>{
                    ) ,
                  ),
                  Text(
-                   "Beauty Saloon",
-                   style: TextStyle(fontWeight: FontWeight.bold),
+                   "Beauty Salon",
+                   style: TextStyle(
+                     fontWeight: FontWeight.bold,
+                     color:createMaterialColor(Color(0xFF674ea7)),
+                     fontSize: 20.0,
+
+                   ),
+
                  ),
                  SizedBox(height: 5),
                  Text(
@@ -55,7 +58,10 @@ class Profilestate extends State<Profile>{
                  SizedBox(height: 15),
                  Row(
                    children: <Widget>[
-                     Icon(Icons.location_on),
+                     Icon(
+                       Icons.location_on,
+                       color:createMaterialColor(Color(0xFF674ea7)),
+                     ),
                      Text(
                        "Wellawatta,Colombo",
                        style: TextStyle(fontWeight: FontWeight.w500),
@@ -68,7 +74,10 @@ class Profilestate extends State<Profile>{
                    children: <Widget>[
                      Column(
                        children: <Widget>[
-                         Icon(Icons.access_time),
+                         Icon(
+                           Icons.access_time,
+                           color:createMaterialColor(Color(0xFF674ea7)),
+                         ),
                        ],),
                      Column(
                        children: <Widget>[
@@ -85,7 +94,10 @@ class Profilestate extends State<Profile>{
                        ],),
                      Column(
                        children: <Widget>[
-                         Icon(Icons.calendar_today),
+                         Icon(
+                           Icons.calendar_today,
+                           color:createMaterialColor(Color(0xFF674ea7)),
+                         ),
                        ],),
                      Column(
                        children: <Widget>[
@@ -110,6 +122,7 @@ class Profilestate extends State<Profile>{
                        children: <Widget>[
                          Icon(
                            Icons.assignment_ind,
+                           color:createMaterialColor(Color(0xFF674ea7)),
 
                          ),
                        ],),
@@ -128,7 +141,10 @@ class Profilestate extends State<Profile>{
                        ],),
                      Column(
                        children: <Widget>[
-                         Icon(Icons.more),
+                         Icon(
+                           Icons.more,
+                           color:createMaterialColor(Color(0xFF674ea7)),
+                         ),
                        ],),
                      Column(
                        children: <Widget>[
@@ -149,7 +165,10 @@ class Profilestate extends State<Profile>{
                  Row(
                    mainAxisAlignment: MainAxisAlignment.start,
                    children: <Widget>[
-                     Icon(Icons.phone),
+                     Icon(
+                       Icons.phone,
+                       color:createMaterialColor(Color(0xFF674ea7)),
+                     ),
                      Column(
                        children: <Widget>[
                          Text(
@@ -163,11 +182,6 @@ class Profilestate extends State<Profile>{
                    ],
                  ),
                  SizedBox(height: 20),
-
-                 /*Divider(
-                   color: Colors.black,
-                   height: 40,
-                 )*/
                ],
              ),
            ) ,
@@ -182,7 +196,7 @@ class Profilestate extends State<Profile>{
                    style: TextStyle(fontWeight: FontWeight.w500),
 
                  ),
-                 SizedBox(height: 10),
+                 SizedBox(height: 5),
                  Container(
                    padding: const EdgeInsets.symmetric(vertical: 0.0),
                    constraints: const BoxConstraints(maxHeight: 200.0),
@@ -199,7 +213,7 @@ class Profilestate extends State<Profile>{
 
 
            ),
-
+         SizedBox(height: 5),
          Container(
            margin: EdgeInsets.symmetric(horizontal: 10),
            child: Column(
@@ -207,14 +221,6 @@ class Profilestate extends State<Profile>{
                Text(
                  "Services",
                  style: TextStyle(fontWeight: FontWeight.w500),
-
-               ),
-               Row(
-                 children: <Widget>[
-
-
-                 ],
-
                ),
              ],
            ),
@@ -222,26 +228,68 @@ class Profilestate extends State<Profile>{
 
          ),
 
+         SizedBox(height: 5),
+         Container(
+           padding: EdgeInsets.all(30),
+           //color:createMaterialColor(Color(0xFF674ea7)),
+           color: Colors.grey[300],
+
+           child: Row(
+             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+             children: <Widget>[
+               Column(
+                 children: <Widget>[
+                  /*Row(
+                     crossAxisAlignment: CrossAxisAlignment.center,
+                     children: <Widget>[
+
+                     ],
+                   )*/
+                   SingleChildScrollView(
+                       scrollDirection: Axis.horizontal,
+                       child: Row(
+                           children: <Widget>[
+
+                             Text('hi'),
+                             Text('hi'),
+                             Text('hi'),
+                           ]
+                       )
+                   )
+                 ],
+
+
+               )
+             ],
+           ),
+         ),
+         SizedBox(height: 5),
          Container(
            margin: EdgeInsets.symmetric(horizontal: 10),
            child: Column(
              children: <Widget>[
-                Row(
-                  children: <Widget>[
+                Text(
+                  "Customer Reviews",
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                ),
+                Card(
+                  child: Container(
 
-                  ],
-                )
+                  ),
+                ),
+
              ],
            ),
 
 
-         )
-
+         ),
+         SizedBox(height: 30),
 
 
 
        ],
      )
+
    );
 
 
@@ -262,3 +310,24 @@ Widget _buildHorizontalChild(BuildContext context, int index) {
       ),
     );
 }
+
+MaterialColor createMaterialColor(Color color) {
+  List strengths = <double>[.05];
+  Map swatch = <int, Color>{};
+  final int r = color.red, g = color.green, b = color.blue;
+
+  for (int i = 1; i < 10; i++) {
+    strengths.add(0.1 * i);
+  }
+  strengths.forEach((strength) {
+    final double ds = 0.5 - strength;
+    swatch[(strength * 1000).round()] = Color.fromRGBO(
+      r + ((ds < 0 ? r : (255 - r)) * ds).round(),
+      g + ((ds < 0 ? g : (255 - g)) * ds).round(),
+      b + ((ds < 0 ? b : (255 - b)) * ds).round(),
+      1,
+    );
+  });
+  return MaterialColor(color.value, swatch);
+}
+
