@@ -2,6 +2,8 @@ import 'package:bubble_saloon/layouts/pages/About.dart';
 import 'package:bubble_saloon/layouts/pages/Appointments/Calendar.dart';
 import 'package:bubble_saloon/layouts/pages/Help.dart';
 import 'package:bubble_saloon/layouts/pages/Profile.dart';
+import 'package:bubble_saloon/layouts/pages/Manage.dart';
+
 import 'package:flutter/material.dart';
 
 
@@ -50,8 +52,14 @@ class Settings extends StatelessWidget {
                   _buildDivider(),
                   ListTile(
                     title: Text("Manage Blogs"),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) =>Manage()),
+                      );
+                    },
                     trailing: Icon(Icons.arrow_right),
+
                   ),
                   ListTile(
                     title: Text("Customer Reviews"),
