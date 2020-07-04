@@ -1,8 +1,9 @@
 import 'package:bubble_saloon/layouts/pages/Home.dart';
 import 'package:flutter/material.dart';
+import 'package:bubble_saloon/modules/http.dart';
 
 void main() {
-  runApp(MyApphome());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -42,7 +43,46 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  TextEditingController nameController = TextEditingController();
+  String response = "";
 
+  createUser() async {
+    print("createuser");
+    var result = await http_post("createuser", {
+      "name": nameController.text,
+    });
+    if(result.ok)
+    {
+      setState(() {
+        response = result.data['status'];
+      });
+    }
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Add User"),
+      ),
+      body: Column(
+        children: <Widget>[
+          TextField(
+            controller: nameController,
+            decoration: InputDecoration(
+                hintText: "Name"
+            ),
+          ),
+          RaisedButton(
+            child: Text("Create"),
+            onPressed: createUser,
+          ),
+          Text(response),
+        ],
+      ),
+    );
+  }
+  //old
+/*
   @override
   Widget build(BuildContext context) {
    
@@ -73,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
      // This trailing comma makes auto-formatting nicer for build methods.
     );
-  }
+  }*/
 }
 
 
