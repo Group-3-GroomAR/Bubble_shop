@@ -47,19 +47,29 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController passwordController = TextEditingController();
   String response = "";
 
-  createUser() async {
-    print("createuser");
-    var result = await http_post("createuser", {
+  getUser()async {
+    print("getuser");
+    var r = await http_get("getuser", {
       "email": nameController.text,
       "password": passwordController.text,
     });
-    if(result.ok)
-    {
-      setState(() {
-        response = result.data['status'];
-      });
+    if (r.ok) {
+      response=r.data['status'];
     }
   }
+//  createUser() async {
+//    print("createuser");
+//    var result = await http_post("createuser", {
+//      "email": nameController.text,
+//      "password": passwordController.text,
+//    });
+//    if(result.ok)
+//    {
+//      setState(() {
+//        response = result.data['status'];
+//      });
+//    }
+//  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -133,9 +143,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: Color(0xFF674ea7),
                   child: Text('Login'),
                   onPressed: () {
-                    print(nameController.text);
-                    print(passwordController.text);
-                  },
+                   getUser();
+                  }
+
                 )),
             Container(
                 child: Row(

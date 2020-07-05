@@ -1,3 +1,4 @@
+import 'package:bubble_saloon/test.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bubble_saloon/modules/http.dart';
@@ -14,11 +15,35 @@ class customformstate extends  State<MyCustomForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
   bool _agreedToTOS = true;
+  String response = "";
+
   String _name;
   String _email;
   String _location;
   String _mobile;
   String _certifiednumber;
+
+  createUser() async {
+   print(_email);
+    var result = await http_post("createuser", {
+      "name":_name,
+      "email":_email,
+      "location" : _location,
+      "mobile":_mobile,
+      "certifiednumber":_certifiednumber
+    });
+    if(result.ok)
+    {
+      setState(() {
+        response = result.data['status'];
+        if(response == "OK") {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => testo()));
+        }
+      });
+    }
+  }
+
 
 
   @override
@@ -137,7 +162,11 @@ class customformstate extends  State<MyCustomForm> {
 
 
         new RaisedButton(
-          onPressed: _validateInputs,
+          onPressed: (){
+            _validateInputs();
+            createUser();
+          },
+        //  onPressed: _validateInputs,
           child: new Text('Submit'),
         )
       ],
