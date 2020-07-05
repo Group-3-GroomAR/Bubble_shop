@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:bubble_saloon/modules/http.dart';
 
 import 'layouts/forms/form_page1.dart';
+import 'layouts/forms/form_page2.dart';
 //import 'package:bubble_saloon/modules/http.dart';
 
 void main() {
   runApp(MyApp());
+  //runApp(MyCustomForm());
+
+
 }
 
 class MyApp extends StatelessWidget {
@@ -40,12 +44,14 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   TextEditingController nameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   String response = "";
 
   createUser() async {
     print("createuser");
     var result = await http_post("createuser", {
-      "name": nameController.text,
+      "email": nameController.text,
+      "password": passwordController.text,
     });
     if(result.ok)
     {
@@ -57,10 +63,102 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Add User"),
-      ),
-      body: Column(
+
+      body:SingleChildScrollView(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(top: 50),
+                  child:CircleAvatar(
+                    radius: 60,
+                    backgroundColor:(Color(0xFF674ea7)),
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage('assets/images/logo.png'),
+                      radius: 55,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  'Login',
+                  style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold
+                  ),
+                )),
+            Container(
+              padding: EdgeInsets.all(10),
+              child: TextField(
+                controller: nameController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Email',
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: TextField(
+                obscureText: true,
+                controller: passwordController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Password',
+                ),
+              ),
+            ),
+            FlatButton(
+              onPressed: (){
+                //forgot password screen
+              },
+              textColor: Color(0xFF674ea7),
+              child: Text('Forgot Password'),
+            ),
+            Container(
+                height: 50,
+                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: RaisedButton(
+                  textColor: Colors.white,
+                  color: Color(0xFF674ea7),
+                  child: Text('Login'),
+                  onPressed: () {
+                    print(nameController.text);
+                    print(passwordController.text);
+                  },
+                )),
+            Container(
+                child: Row(
+                  children: <Widget>[
+                    Text('Does not have account?'),
+                    FlatButton(
+                      textColor: Color(0xFF674ea7),
+                      child: Text(
+                        'Register',
+                        style: TextStyle(fontSize: 17),
+                      ),
+                      onPressed:()=> Navigator.push(context, MaterialPageRoute(builder: (context) => MyCustomForm())),
+                    ),
+                    //Text(response),
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                ))
+          ],
+
+        ),
+      )
+
+      /*body: Column(
         children: <Widget>[
           TextField(
             controller: nameController,
@@ -74,7 +172,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           Text(response),
         ],
-      ),
+      ),*/
     );
   }
   //old
