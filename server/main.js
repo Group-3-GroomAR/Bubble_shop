@@ -43,15 +43,15 @@ app.get('/t', function (req, res) {
 
 app.get('/getuser', async (req, res, next) => {
 
-  const email = req.body.email;
-  const password  = req.body.password;
+  // const email = req.body.email;
+  // const password  = req.body.password;
 
-  const [rows] = await db.query("SELECT * FROM users;");
+  const [rows] = await db.query("SELECT * FROM salon;");
   
 
-  console.log(rows[0]);
-  // res.json(rows);
-  // next();
+  //console.log(rows[0]);
+  res.json(rows);
+   next();
 });
 
 app.post('/t2',function(req,res){

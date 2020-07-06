@@ -47,15 +47,32 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController passwordController = TextEditingController();
   String response = "";
 
+
   getUser()async {
-    print("getuser");
-    var r = await http_get("getuser", {
-      "email": nameController.text,
-      "password": passwordController.text,
-    });
-    if (r.ok) {
-      response=r.data['status'];
+
+    if (nameController =="salonqwerty@gmail.com"){
+      if(passwordController=="qwerty123"){
+
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => MyApphome()));
+      }else {
+//        Scaffold.of(context).showSnackBar(SnackBar(
+//          content: Text("Password is incorrect"),
+//        ));
+      }
+    }else{
+//      Scaffold.of(context).showSnackBar(SnackBar(
+//        content: Text("Entered email is incorrect"),
+//      ));
     }
+//    print("getuser");
+//    var r = await http_get("getuser", {
+//      "email": nameController.text,
+//      "password": passwordController.text,
+//    });
+//    if (r.ok) {
+//      response=r.data['status'];
+//    }
   }
 //  createUser() async {
 //    print("createuser");

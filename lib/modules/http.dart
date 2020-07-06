@@ -20,6 +20,7 @@ Future<RequestResult> http_get(String route, [dynamic data]) async
   print("l");
   var result = await http.get(url);
   print("l");
+  
   return RequestResult(true, jsonDecode(result.body));
 
 }
