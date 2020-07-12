@@ -9,8 +9,6 @@ import 'layouts/forms/form_page2.dart';
 void main() {
   runApp(MyApp());
   //runApp(MyCustomForm());
-
-
 }
 
 class MyApp extends StatelessWidget {

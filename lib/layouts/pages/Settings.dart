@@ -3,10 +3,8 @@ import 'package:bubble_saloon/layouts/pages/Appointments/Calendar.dart';
 import 'package:bubble_saloon/layouts/pages/Help.dart';
 import 'package:bubble_saloon/layouts/pages/Profile.dart';
 import 'package:bubble_saloon/layouts/pages/Manage.dart';
-import 'package:bubble_saloon/layouts/pages/Payment.dart';
 
 import 'package:flutter/material.dart';
-
 
 class Settings extends StatelessWidget {
 

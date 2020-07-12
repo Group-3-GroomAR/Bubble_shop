@@ -82,7 +82,7 @@ class customformstate extends  State<MyCustomForm> {
             _name = val;
           },
         ),
-
+       //getting email
         new TextFormField(
           decoration: const InputDecoration(labelText: 'Email'),
           keyboardType: TextInputType.emailAddress,
@@ -91,7 +91,7 @@ class customformstate extends  State<MyCustomForm> {
             _email = val;
           },
         ),
-
+        //getting location
         new TextFormField(
           decoration: const InputDecoration(labelText: 'Location'),
           keyboardType: TextInputType.text,
@@ -100,7 +100,7 @@ class customformstate extends  State<MyCustomForm> {
             _location = val;
           },
         ),
-
+        //getting mobile number
         new TextFormField(
           decoration: const InputDecoration(labelText: 'Mobile'),
           keyboardType: TextInputType.phone,
@@ -109,7 +109,7 @@ class customformstate extends  State<MyCustomForm> {
             _mobile = val;
           },
         ),
-
+        //getting certification number which is approved by government
         new TextFormField(
           decoration: const InputDecoration(labelText: 'Certified Number'),
           keyboardType: TextInputType.text,
