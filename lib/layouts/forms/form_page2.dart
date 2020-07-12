@@ -74,6 +74,7 @@ class customformstate extends  State<MyCustomForm> {
   Widget FormUI() {
     return new Column(
       children: <Widget>[
+        //getting Salon name
         new TextFormField(
           decoration: const InputDecoration(labelText: 'Salon Name'),
           keyboardType: TextInputType.text,
