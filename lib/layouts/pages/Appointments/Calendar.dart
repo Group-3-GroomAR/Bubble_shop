@@ -19,6 +19,7 @@ class Calendar extends StatefulWidget {
   }
 }
 
+// ignore: camel_case_types
 class calState extends State<Calendar> {
   DateTime _currentDate = DateTime(2020,5, 15);
   DateTime _currentDate2 = DateTime(2020, 5, 15);

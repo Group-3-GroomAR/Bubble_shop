@@ -8,6 +8,7 @@ class MyCustomForm1 extends StatefulWidget
     return customform1state();
   }
 }
+// ignore: camel_case_types
 class customform1state extends  State<MyCustomForm1> {
   final TextEditingController nameController = TextEditingController();
   String response = "";

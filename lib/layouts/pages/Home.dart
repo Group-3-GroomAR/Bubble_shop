@@ -1,4 +1,6 @@
 
+// ignore: unused_import
+import 'package:bubble_saloon/firstscreen.dart';
 import 'package:bubble_saloon/layouts/pages/S_home.dart';
 import 'package:bubble_saloon/layouts/pages/Settings.dart';
 
@@ -6,7 +8,8 @@ import 'package:flutter/material.dart';
 import 'Appointments/Calendar.dart';
 import 'QR_scan/Scan.dart';
 import 'Profile.dart';
-
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 void main() {
   runApp(MyApphome());
 }
@@ -21,9 +24,15 @@ class MyApphome extends StatefulWidget {
 
 
 class MyAppState extends State<MyApphome>{
-  Color _iconColor = Colors.white;
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+   final GoogleSignIn _googleSignIn = GoogleSignIn();
+ 
+
+  bool isLoggin=false;
+
+  // ignore: non_constant_identifier_names
   Color _back_col =createMaterialColor(Color(0xFF674ea7));
-  Color _mpurple=createMaterialColor(Color(0xFF674ea7));
   int _selectedPage =4;
   final _pageOptions = [
        Profile(),
@@ -34,12 +43,27 @@ class MyAppState extends State<MyApphome>{
 
 
   ];
+  
+   Future<FirebaseUser> _handleSignIn() async {
+    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-  get _selectedTab => null;
-  @override
-  Widget build(BuildContext context) {
-   
-    return MaterialApp(
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    final FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
+    print("signed in " + user.displayName);
+    return user;
+  }
+
+
+   Widget getHome() {
+ 
+  if (isLoggin) {
+ 
+       return MaterialApp( 
       title: 'Bubble shop',
       theme: ThemeData(
 
@@ -96,7 +120,6 @@ class MyAppState extends State<MyApphome>{
                     setState(() {
                       _selectedPage=4;
                       _back_col = Colors.white;
-                      _iconColor = _mpurple;
                     });
                   },
                   splashColor: Colors.purple[50],
@@ -122,7 +145,6 @@ class MyAppState extends State<MyApphome>{
                   setState(() {
                   _selectedPage=3;
                   _back_col = Colors.white;
-                  _iconColor = _mpurple;
                      });
                   },
                   splashColor: Colors.purple[50],
@@ -140,48 +162,58 @@ class MyAppState extends State<MyApphome>{
 
       //First one normal
       body: _pageOptions[_selectedPage],
-//        bottomNavigationBar: BottomNavigationBar(
-//
-//      type: BottomNavigationBarType.fixed,
-//
-//        backgroundColor:createMaterialColor(Color(0xFF674ea7)),
-//
-//          currentIndex : _selectedPage,
-//          onTap : (int index){
-//            setState(() {
-//              _selectedPage=index;
-//            });
-//          },
-//          items: [
-//            BottomNavigationBarItem(
-//              icon:Icon(Icons.home,color: Colors.white,),
-//              title: Text('Home'),
-//
-//             backgroundColor:createMaterialColor(Color(0xFF674ea7))
-//               ),
-//               BottomNavigationBarItem(
-//              icon:Icon(Icons.calendar_today,color: Colors.white,),
-//             title: Text('Calendar'),
-//               backgroundColor: createMaterialColor(Color(0xFF674ea7))
-//               ),
-//               BottomNavigationBarItem(
-//              icon:Icon(Icons.center_focus_strong,color: Colors.white,),
-//              title: Text('Scan'),
-//             backgroundColor:createMaterialColor(Color(0xFF674ea7))
-//               ),
-//
-//            BottomNavigationBarItem(
-//                icon:Icon(Icons.settings,color: Colors.white,),
-//                title: Text('Settings'),
-//               backgroundColor: createMaterialColor(Color(0xFF674ea7))
-//            )
-//          ],
-//        ),
+
 
 
 
       )
     );
+  } 
+  
+  else  {
+ 
+   return MaterialApp( 
+      title: 'Bubble shop',
+      theme: ThemeData(
+
+     primarySwatch: createMaterialColor(Color(0xFF674ea7)),
+
+  //  primaryColor: Colors.,
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: Scaffold(
+        body:
+    Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children:<Widget> [
+                Text("Login Here"),
+                RaisedButton(onPressed: (){
+                  _handleSignIn().then((value) => {
+                    setState(() {
+                      isLoggin = true;
+     
+    })
+                  }
+                  );
+                  },
+                 child: Text("Google Signin"),)
+              ],
+            )
+          ),
+      )
+   );
+
+}
+
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return 
+    getHome();
+    
   }
 }
 /*

@@ -3,6 +3,7 @@ import 'package:bubble_saloon/layouts/pages/Appointments/Calendar.dart';
 import 'package:bubble_saloon/layouts/pages/Help.dart';
 import 'package:bubble_saloon/layouts/pages/Profile.dart';
 import 'package:bubble_saloon/layouts/pages/Manage.dart';
+// ignore: unused_import
 import 'package:bubble_saloon/layouts/pages/Payment.dart';
 
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class Settings extends StatelessWidget {
     fontWeight: FontWeight.bold,
     fontSize: 20.0,
   );
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

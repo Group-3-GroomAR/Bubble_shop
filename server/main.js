@@ -1,5 +1,5 @@
 const express = require("express");
-const mysql = require("mysql");
+const mysql = require('mysql2/promise');
 const bodyparser = require('body-parser');
 const userRout = express.Router();
  
@@ -15,7 +15,14 @@ userRout.route('/test1').post(function (req,res){
 
 })
 
+app.get('/shop',async(req,res,next)=>{
+  console.log("HIII");
+  const [rows]=await db.query("SELECT * FROM salon;");
 
+  res.json(rows);
+  next();
+}
+)
 
 
 app.post('/createuser', async(req, res, next)=>{
@@ -77,6 +84,7 @@ app.post('/learners', (req, res) => {
   console.log(err);
   })
   });
+
 async function main(){
   db = await mysql.createConnection({
     host:'localhost',

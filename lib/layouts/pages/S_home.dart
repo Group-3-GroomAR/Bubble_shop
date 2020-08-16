@@ -1,7 +1,33 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:bubble_saloon/modules/http.dart';
 
-class SaloonHome extends StatelessWidget {
+class SaloonHome extends StatefulWidget
+{
+  SaloonHome({Key key}) : super(key: key);
+  @override
+  s_homestate createState() => s_homestate();
+}
+// ignore: camel_case_types
+class s_homestate extends  State<SaloonHome> {
+  String response = "";
+  testUser() async {
+    print("inside");
+    var result = await http_post("mytest", {
+      "name":"pruthi",
+
+    });
+    if(result.ok)
+    {
+      setState(() {
+        response = result.data['status'];
+        if(response == "OK") {
+//          Navigator.push(
+//              context, MaterialPageRoute(builder: (context) => testo()));
+        }
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,8 +90,8 @@ class SaloonHome extends StatelessWidget {
 
                     FlatButton(
                       child: const Text('CHECK',style: TextStyle(color: Colors.white),),
-
-                      onPressed: () { /* ... */ },
+                       //testing http
+                      onPressed: () { testUser();},
                     ),
                     Icon(Icons.arrow_forward,color: Colors.purple[100],
                     )

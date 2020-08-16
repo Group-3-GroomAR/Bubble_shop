@@ -10,6 +10,7 @@ class MyCustomForm extends StatefulWidget
   @override
   customformstate createState() => customformstate();
 }
+// ignore: camel_case_types
 class customformstate extends  State<MyCustomForm> {
   //  _formKey and _autoValidate
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -71,6 +72,7 @@ class customformstate extends  State<MyCustomForm> {
   }
 
 // Here is our Form UI
+  // ignore: non_constant_identifier_names
   Widget FormUI() {
     return new Column(
       children: <Widget>[
@@ -164,7 +166,8 @@ class customformstate extends  State<MyCustomForm> {
         new RaisedButton(
           onPressed: (){
             _validateInputs();
-            createUser();
+            if(_validateInputs()){
+            createUser();}
           },
         //  onPressed: _validateInputs,
           child: new Text('Submit'),
@@ -223,7 +226,7 @@ class customformstate extends  State<MyCustomForm> {
       return null;
   }
 
-  void _validateInputs() {
+ bool _validateInputs() {
     if (_formKey.currentState.validate()) {
       //If all data are correct then save data to out variables
       _formKey.currentState.save();
@@ -233,5 +236,6 @@ class customformstate extends  State<MyCustomForm> {
         _autoValidate = true;
       });
     }
+   return true;
   }
 }

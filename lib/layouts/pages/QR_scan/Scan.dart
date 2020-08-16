@@ -6,7 +6,7 @@ class Scan extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:AppBar(
-        title: Text('Contact Us'),
+        title: Text('QR Scan'),
 
       ),
       body: Center(

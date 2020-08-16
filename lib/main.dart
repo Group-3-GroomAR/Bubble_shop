@@ -1,13 +1,25 @@
 import 'package:bubble_saloon/layouts/pages/Home.dart';
+// ignore: unused_import
+import 'package:bubble_saloon/test.dart';
 import 'package:flutter/material.dart';
+// ignore: unused_import
 import 'package:bubble_saloon/modules/http.dart';
 
+// ignore: unused_import
 import 'layouts/forms/form_page1.dart';
 import 'layouts/forms/form_page2.dart';
 //import 'package:bubble_saloon/modules/http.dart';
 
+
+//signin
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+
+import 'layouts/pages/TestPage.dart';
+
 void main() {
-  runApp(MyApp());
+  runApp(TestPage());
   //runApp(MyCustomForm());
 
 
@@ -43,27 +55,64 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool isLogin = false;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   String response = "";
 
+    Future<String> signInWithGoogle() async {
+    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+    final GoogleSignInAuthentication googleSignInAuthentication =
+    await googleSignInAccount.authentication;
+
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,
+    );
+
+    final AuthResult authResult = await _auth.signInWithCredential(credential);
+    final FirebaseUser user = authResult.user;
+
+    assert(!user.isAnonymous);
+    assert(await user.getIdToken() != null);
+
+    final FirebaseUser currentUser = await _auth.currentUser();
+    assert(user.uid == currentUser.uid);
+
+    return 'signInWithGoogle succeeded: $user';
+  }
 
   getUser()async {
 
-    if (nameController =="salonqwerty@gmail.com"){
-      if(passwordController=="qwerty123"){
+    if (nameController.text =="salonqwerty@gmail.com"){
+      if(passwordController.text=="qwerty123"){
 
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => MyApphome()));
       }else {
-//        Scaffold.of(context).showSnackBar(SnackBar(
-//          content: Text("Password is incorrect"),
-//        ));
+
       }
     }else{
-//      Scaffold.of(context).showSnackBar(SnackBar(
-//        content: Text("Entered email is incorrect"),
-//      ));
+      AlertDialog(
+          title: Text('AlertDialog Title'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('This is a demo alert dialog.'),
+                Text('Would you like to approve of this message?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+      FlatButton(
+      child: Text('Approve'),
+    onPressed: () {
+    Navigator.of(context).pop();
+    },
+    )]);
     }
 //    print("getuser");
 //    var r = await http_get("getuser", {
@@ -155,12 +204,14 @@ class _MyHomePageState extends State<MyHomePage> {
             Container(
                 height: 50,
                 padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                child: RaisedButton(
+                child:
+                RaisedButton(
                   textColor: Colors.white,
                   color: Color(0xFF674ea7),
-                  child: Text('Login'),
+                  child: Text('Google Sign in'),
                   onPressed: () {
-                   getUser();
+                   signInWithGoogle();
+                   Navigator.push(context, MaterialPageRoute(builder: (context) => MyApphome()));
                   }
 
                 )),
@@ -176,6 +227,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       onPressed:()=> Navigator.push(context, MaterialPageRoute(builder: (context) => MyCustomForm())),
                     ),
+
                     //Text(response),
                   ],
                   mainAxisAlignment: MainAxisAlignment.center,

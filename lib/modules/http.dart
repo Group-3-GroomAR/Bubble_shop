@@ -1,4 +1,5 @@
 import 'dart:convert';
+// ignore: unused_import
 import 'dart:io';
 import "package:http/http.dart" as http;
 
@@ -10,8 +11,9 @@ class RequestResult
 }
 
 const PROTOCOL = "http";
-const DOMAIN = "192.168.8.101:3000";
+const DOMAIN = "192.168.43.184:3000";
 
+// ignore: non_constant_identifier_names
 Future<RequestResult> http_get(String route, [dynamic data]) async
 {
   var dataStr = jsonEncode(data);
@@ -24,6 +26,7 @@ Future<RequestResult> http_get(String route, [dynamic data]) async
   return RequestResult(true, jsonDecode(result.body));
 
 }
+// ignore: non_constant_identifier_names
 Future<RequestResult> http_post(String route, [dynamic data]) async
 {
 
@@ -38,6 +41,6 @@ Future<RequestResult> http_post(String route, [dynamic data]) async
 
 
   var result = await http.post(url,body:dataStr,headers: {"Content-Type":"application/json"});
-
+    print("hi");
   return RequestResult(true, jsonDecode(result.body));
 }
