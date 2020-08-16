@@ -21,8 +21,6 @@ import 'layouts/pages/TestPage.dart';
 void main() {
   runApp(TestPage());
   //runApp(MyCustomForm());
-
-
 }
 
 class MyApp extends StatelessWidget {
@@ -85,57 +83,8 @@ class _MyHomePageState extends State<MyHomePage> {
     return 'signInWithGoogle succeeded: $user';
   }
 
-  getUser()async {
 
-    if (nameController.text =="salonqwerty@gmail.com"){
-      if(passwordController.text=="qwerty123"){
 
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => MyApphome()));
-      }else {
-
-      }
-    }else{
-      AlertDialog(
-          title: Text('AlertDialog Title'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('This is a demo alert dialog.'),
-                Text('Would you like to approve of this message?'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-      FlatButton(
-      child: Text('Approve'),
-    onPressed: () {
-    Navigator.of(context).pop();
-    },
-    )]);
-    }
-//    print("getuser");
-//    var r = await http_get("getuser", {
-//      "email": nameController.text,
-//      "password": passwordController.text,
-//    });
-//    if (r.ok) {
-//      response=r.data['status'];
-//    }
-  }
-//  createUser() async {
-//    print("createuser");
-//    var result = await http_post("createuser", {
-//      "email": nameController.text,
-//      "password": passwordController.text,
-//    });
-//    if(result.ok)
-//    {
-//      setState(() {
-//        response = result.data['status'];
-//      });
-//    }
-//  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -309,3 +258,5 @@ MaterialColor createMaterialColor(Color color) {
   });
   return MaterialColor(color.value, swatch);
 }
+
+ 
