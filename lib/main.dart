@@ -48,7 +48,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   getUser()async {
 
-    if (nameController =="salonqwerty@gmail.com"){
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => MyApphome()));
+
+    /*if (nameController =="salonqwerty@gmail.com"){
       if(passwordController=="qwerty123"){
 
         Navigator.push(
@@ -62,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
 //      Scaffold.of(context).showSnackBar(SnackBar(
 //        content: Text("Entered email is incorrect"),
 //      ));
-    }
+    }*/
 //    print("getuser");
 //    var r = await http_get("getuser", {
 //      "email": nameController.text,
@@ -159,6 +162,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Text('Login'),
                   onPressed: () {
                    getUser();
+
                   }
 
                 )),
