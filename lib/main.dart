@@ -19,7 +19,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'layouts/pages/TestPage.dart';
 
 void main() {
-  runApp(TestPage());
+  runApp(MyApphome());
   //runApp(MyCustomForm());
 }
 
