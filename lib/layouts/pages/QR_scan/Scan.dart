@@ -1,5 +1,9 @@
 import 'package:barcode_scan/barcode_scan.dart';
+import 'package:bubble_saloon/modules/http.dart';
 import 'package:flutter/material.dart';
+
+
+
 
 class Scan extends StatefulWidget {
 
@@ -9,9 +13,18 @@ class Scan extends StatefulWidget {
 
 class _ScanState extends State<Scan> {
   String qrCodeResult = "Not Yet Scanned";
+  String response = "";
+  //
+  // checkScan(code) async{
+  //   var result = await http_post("checkScan", {
+  //    "resnumber" = code.toString();
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return
+      Scaffold(
       appBar:AppBar(
         title: Text('QR SCANNING'),
         centerTitle: true,

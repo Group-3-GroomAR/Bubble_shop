@@ -3,6 +3,7 @@
 import 'package:bubble_saloon/firstscreen.dart';
 import 'package:bubble_saloon/layouts/pages/S_home.dart';
 import 'package:bubble_saloon/layouts/pages/Settings.dart';
+import 'package:bubble_saloon/modules/auth.dart';
 
 import 'package:flutter/material.dart';
 import 'Appointments/Calendar.dart';
@@ -25,9 +26,13 @@ class MyApphome extends StatefulWidget {
 
 class MyAppState extends State<MyApphome>{
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-   final GoogleSignIn _googleSignIn = GoogleSignIn();
- 
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
+  //  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  static var u =false;
+  // var myuser = AuthService().getUser().then((value) => u = value.isAnonymous);
+     
+// var myuser2 = AuthService().getUser();
+     
 
   bool isLoggin=false;
 
@@ -44,24 +49,25 @@ class MyAppState extends State<MyApphome>{
 
   ];
   
-   Future<FirebaseUser> _handleSignIn() async {
-    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+  //  Future<FirebaseUser> _handleSignIn() async {
+  //   final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+  //   final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
+  //   final AuthCredential credential = GoogleAuthProvider.getCredential(
+  //     accessToken: googleAuth.accessToken,
+  //     idToken: googleAuth.idToken,
+  //   );
 
-    final FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
-    print("signed in " + user.displayName);
-    return user;
-  }
+  //   final FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
+  //   print("signed in " + user.displayName);
+  //   return user;
+  // }
 
-
+ 
    Widget getHome() {
  
-  if (isLoggin) {
+  // ignore: unrelated_type_equality_checks
+  if (true) {
  
        return MaterialApp( 
       title: 'Bubble shop',
@@ -78,12 +84,13 @@ class MyAppState extends State<MyApphome>{
           backgroundColor: Colors.white,
           elevation:30 ,
           onPressed: (){
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Scan()),
-            );
-          },
+            setState(() {
+              _selectedPage=2;
 
+            });
+          },
+          // onPressed:() =>AuthService().signOutWithGoogle()
+        
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       //  appBar: AppBar(title:Text('Bubble'),),
@@ -189,14 +196,15 @@ class MyAppState extends State<MyApphome>{
               children:<Widget> [
                 Text("Login Here"),
                 RaisedButton(onPressed: (){
-                  _handleSignIn().then((value) => {
-                    setState(() {
-                      isLoggin = true;
+                 AuthService().handleSignIn();
+    //               .then((value) => {
+    //                 setState(() {
+    //                   isLoggin = true;
      
-    })
-                  }
-                  );
-                  },
+    // })
+                  // }
+                // );
+              },
                  child: Text("Google Signin"),)
               ],
             )
@@ -211,6 +219,7 @@ class MyAppState extends State<MyApphome>{
 
   @override
   Widget build(BuildContext context) {
+    // print(myuser);
     return 
     getHome();
     

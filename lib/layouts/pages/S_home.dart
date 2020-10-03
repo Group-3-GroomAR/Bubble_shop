@@ -1,3 +1,4 @@
+import 'package:bubble_saloon/layouts/modals/Reservation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bubble_saloon/modules/http.dart';
@@ -10,23 +11,51 @@ class SaloonHome extends StatefulWidget
 }
 // ignore: camel_case_types
 class s_homestate extends  State<SaloonHome> {
-  String response = "";
-  testUser() async {
-    print("inside");
-    var result = await http_post("mytest", {
-      "name":"pruthi",
-
+  bool showrefresh = false;
+  var myid="ax3";
+  var today=new DateTime.now();
+   List<Reservation> reservations = [];
+   
+  // bool compareDate(dateobj){
+  //   print(dateobj.day == today.day);
+  //   if(dateobj.day==today.day && dateobj.month == today.month && dateobj.year == today.year) return true;
+  //   else return false;
+  // }
+  
+  Future<void> refreshReserv()async{
+    var result = await http_get("getreservation",{
+      "uid": myid,
     });
+    print("requested");
     if(result.ok)
     {
       setState(() {
-        response = result.data['status'];
-        if(response == "OK") {
-//          Navigator.push(
-//              context, MaterialPageRoute(builder: (context) => testo()));
-        }
+        reservations.clear();
+        var inReservations = result.data as List<dynamic>;
+        inReservations.forEach((resv){
+  reservations.add(Reservation(
+              resv['id'],
+              resv['services'],
+              DateTime.parse(resv['date']).toLocal(),
+               resv['duration'],
+                 resv['start_time'],
+              resv['total'],
+             resv['end_time'],
+             resv['customer_id']
+
+
+          ));
+         
+        });
       });
     }
+  }
+  String response = "";
+ 
+ @override
+ void initState() {
+  //  this.refreshReserv();
+    super.initState();
   }
 
   @override
@@ -43,9 +72,11 @@ class s_homestate extends  State<SaloonHome> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Card(
+            
             shape: RoundedRectangleBorder(
               side: BorderSide(color: Colors.white70, width: 1),
               borderRadius: BorderRadius.circular(30),
+              
 
             ),
 
@@ -84,19 +115,19 @@ class s_homestate extends  State<SaloonHome> {
 
                   ],
                 ),
+                Padding(padding: EdgeInsets.all(20))
+                // ButtonBar(
+                //   children: <Widget>[
 
-                ButtonBar(
-                  children: <Widget>[
-
-                    FlatButton(
-                      child: const Text('CHECK',style: TextStyle(color: Colors.white),),
-                       //testing http
-                      onPressed: () { testUser();},
-                    ),
-                    Icon(Icons.arrow_forward,color: Colors.purple[100],
-                    )
-                  ],
-                ),
+                //     FlatButton(
+                //       child: const Text('CHECK',style: TextStyle(color: Colors.white),),
+                //        //testing http
+                //       onPressed: () { testUser();},
+                //     ),
+                //     Icon(Icons.arrow_forward,color: Colors.purple[100],
+                //     )
+                //   ],
+                // ),
               ],
             ),
           ),
@@ -117,44 +148,54 @@ class s_homestate extends  State<SaloonHome> {
                   //subtitle: Text('Music by Julie Gable. Lyrics by Sidney Stein.'),
                 ),
                 Divider(),
+                
+                // RaisedButton(
+                  
+                //   onPressed:refreshReserv,child:Text("click")
+                //   ),
 //                Center(
 //
 //                  child: Text('No Appointments Today'),
 //                ),
-                ListTile(
-                  title: Text("Ashlee Oakley"),
-                  subtitle: Text("07/22 ,8.00"),
-                  onTap: () {},
-                  leading: CircleAvatar(
-                      backgroundImage: AssetImage('assets/images/default_prof.png'),
+                // ListView(
+                //   shrinkWrap: true,
+                //   children: [
+                    
+                //   ],
+                // ),
+                 ListView.separated(
 
-                  ),
-
-                ),
-                ListTile(
-                  title: Text("Natalie Mckenna"),
-                  subtitle: Text("07/23 ,11.00"),
-                  onTap: () {},
-                  leading: CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/default_prof.png'),
-                  ),
-                ),
-                ListTile(
-                  title: Text("Lennon Turner"),
-                  subtitle: Text("07/26 ,2.00"),
-                  onTap: () {},
-                  leading: CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/default_prof.png'),
-                  ),
-                ),
+                scrollDirection: Axis.vertical,
+                   shrinkWrap: true,
+          itemCount: reservations.length,
+          itemBuilder: (context, i) => ListTile(
+            
+            leading: Icon(Icons.event),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+             
+              children: [
+                Text(reservations[i].customer_id),
+                Text(reservations[i].service_name),
+             Text(reservations[i].setDate()),
+              
+              ],
+            )
+           
+          ),
+          separatorBuilder: (context, i) => Divider(),
+        ),
+              
                 ButtonBar(
+                  
                   children: <Widget>[
+                    Icon(Icons.refresh,color: Colors.purple[100]),
                     FlatButton(
-                      child: const Text('CHECK'),
-                      onPressed: () { /* ... */ },
+                      child: const Text('REFRESH'),
+                      onPressed:refreshReserv,
                     ),
-                   Icon(Icons.arrow_forward,color: Colors.purple[100],
-                   )
+                  //  Icon(Icons.arrow_forward,color: Colors.purple[100],
+                  //  )
                   ],
                 ),
               ],

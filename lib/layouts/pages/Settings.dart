@@ -1,6 +1,8 @@
 import 'package:bubble_saloon/layouts/pages/About.dart';
 import 'package:bubble_saloon/layouts/pages/Appointments/Calendar.dart';
+import 'package:bubble_saloon/layouts/pages/Appointments/Upcoming.dart';
 import 'package:bubble_saloon/layouts/pages/Help.dart';
+import 'package:bubble_saloon/layouts/pages/Logout.dart';
 import 'package:bubble_saloon/layouts/pages/Profile.dart';
 import 'package:bubble_saloon/layouts/pages/Manage.dart';
 // ignore: unused_import
@@ -99,7 +101,10 @@ class Settings extends StatelessWidget {
 
                   ListTile(
                     title: Text("Manage Upcoming Appointments"),
-                    onTap: () {},
+                    onTap: () { Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => UpcomingRes())
+                      );},
                     trailing: Icon(Icons.arrow_right),
                   ),
 
@@ -151,7 +156,10 @@ class Settings extends StatelessWidget {
                   ListTile(
                     leading: Icon(Icons.exit_to_app),
                     title: Text("Logout"),
-                    onTap: (){},
+                    onTap: (){ Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => LogOut())
+                      );},
                     trailing: Icon(Icons.arrow_right),
                   ),
                 ],
