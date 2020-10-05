@@ -1,5 +1,9 @@
 import 'package:barcode_scan/barcode_scan.dart';
+import 'package:bubble_saloon/modules/http.dart';
 import 'package:flutter/material.dart';
+
+
+
 
 class Scan extends StatefulWidget {
 
@@ -9,70 +13,121 @@ class Scan extends StatefulWidget {
 
 class _ScanState extends State<Scan> {
   String qrCodeResult = "Not Yet Scanned";
+  String response = "";
+  var myid="ax3";
+  Color c;
+
+  checkScan(code) async{
+    var result = await http_post("checkQr", {
+      "resnumber" :code,
+      "shopId" : myid
+
+    });
+
+    if(result.data['status'] =='OK') {
+      setState(() {
+        response = result.data['status'];
+        c = Colors.green[300];
+      });
+    } else{
+      setState(() {
+        response = result.data['status'];
+        c = Colors.red;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar:AppBar(
-        title: Text('QR SCANNING'),
-        centerTitle: true,
-      ),
-      body: Container(
-        padding: EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+    return
+      Scaffold(
+          appBar:AppBar(
+            title: Text('QR SCANNING'),
+            centerTitle: true,
+          ),
+          body: Container(
+            padding: EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
 
-          children: <Widget>[
-            Text(
-              "Result",
-                style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center
+              children: <Widget>[
+                Text(
+                    "Code",
+                    style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center
+                ),
+
+                Text(
+                  qrCodeResult,
+                  style: TextStyle(
+                    fontSize: 20.0,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                Container(
+                    margin:EdgeInsets.symmetric(vertical: 0.0,horizontal:100),
+
+                    child:
+                    FlatButton(
+                      padding: EdgeInsets.all(15.0),
+
+                      onPressed: () async {
+
+
+                        String codeSanner = await BarcodeScanner.scan();    //barcode scnner
+                        setState(() {
+                          qrCodeResult = codeSanner;
+                        });
+
+                        // try{
+                        //   BarcodeScanner.scan()    this method is used to scan the QR code
+                        // }catch (e){
+                        //   BarcodeScanner.CameraAccessDenied;   we can print that user has denied for the permisions
+                        //   BarcodeScanner.UserCanceled;   we can print on the page that user has cancelled
+                        // }
+
+                        await checkScan(codeSanner);
+
+                      },
+                      child: Text(
+                        "Scan",
+                        style:
+                        TextStyle(color: Color(0xFF674ea7), fontWeight: FontWeight.bold),
+                      ),
+                      shape: RoundedRectangleBorder(
+
+                          side: BorderSide(color: Color(0xFF674ea7), width: 3.0),
+                          borderRadius: BorderRadius.circular(20.0)),
+
+
+                    )),
+                SizedBox(
+                  height: 60.0,
+                ),
+                Text(
+                  response,
+
+                  style: TextStyle(
+                      fontSize: 14.0,
+                      color:c
+                  ),
+                  textAlign: TextAlign.center,
+
+                ),
+                // RaisedButton.icon(
+                //    //we can dosable it
+                //     onPressed:, icon:Icon(Icons.check_circle) ,
+                //     label:Text("Confirm"))
+              ],
             ),
-
-            Text(
-              qrCodeResult,
-              style: TextStyle(
-                fontSize: 20.0,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            FlatButton(
-              padding: EdgeInsets.all(15.0),
-              onPressed: () async {
+          )
 
 
-                String codeSanner = await BarcodeScanner.scan();    //barcode scnner
-                setState(() {
-                  qrCodeResult = codeSanner;
-                });
-
-                // try{
-                //   BarcodeScanner.scan()    this method is used to scan the QR code
-                // }catch (e){
-                //   BarcodeScanner.CameraAccessDenied;   we can print that user has denied for the permisions
-                //   BarcodeScanner.UserCanceled;   we can print on the page that user has cancelled
-                // }
-
-
-              },
-              child: Text(
-                "Open Scanner",
-                style:
-                TextStyle(color: Color(0xFF674ea7), fontWeight: FontWeight.bold),
-              ),
-              shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Color(0xFF674ea7), width: 3.0),
-                  borderRadius: BorderRadius.circular(20.0)),
-            )
-          ],
-        ),
-      )
-
-
-    );
+      );
   }
 }
 
@@ -244,4 +299,3 @@ class _ScanState extends State<Scan> {
 //     this.setState(() => this.bytes = result);
 //   }
 // }
-

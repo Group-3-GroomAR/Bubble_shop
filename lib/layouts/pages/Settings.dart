@@ -1,3 +1,4 @@
+import 'package:bubble_saloon/layouts/forms/form_page3.dart';
 import 'package:bubble_saloon/layouts/pages/About.dart';
 import 'package:bubble_saloon/layouts/pages/Appointments/Calendar.dart';
 import 'package:bubble_saloon/layouts/pages/Help.dart';

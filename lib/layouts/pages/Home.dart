@@ -1,6 +1,7 @@
 
 // ignore: unused_import
 import 'package:bubble_saloon/firstscreen.dart';
+import 'package:bubble_saloon/layouts/forms/form_page3.dart';
 import 'package:bubble_saloon/layouts/pages/S_home.dart';
 import 'package:bubble_saloon/layouts/pages/Settings.dart';
 
@@ -10,12 +11,14 @@ import 'QR_scan/Scan.dart';
 import 'Profile.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:nice_button/nice_button.dart';
 void main() {
   runApp(MyApphome());
+
 }
 
 class MyApphome extends StatefulWidget {
- 
+
 @override
   State<StatefulWidget> createState() {
     return MyAppState();
@@ -34,6 +37,7 @@ class MyAppState extends State<MyApphome>{
   // ignore: non_constant_identifier_names
   Color _back_col =createMaterialColor(Color(0xFF674ea7));
   int _selectedPage =4;
+  var firstColor = Color(0xff5b86e5), secondColor =Color(0xFF674ea7) ;
   final _pageOptions = [
        Profile(),
        Calendar(),
@@ -59,33 +63,33 @@ class MyAppState extends State<MyApphome>{
   }
 
 
-   Widget getHome() {
+  Widget getHome() {
  
   if (isLoggin) {
  
        return MaterialApp( 
-      title: 'Bubble shop',
-      theme: ThemeData(
+          title: 'Bubble shop',
+          theme: ThemeData(
 
-     primarySwatch: createMaterialColor(Color(0xFF674ea7)),
+          primarySwatch: createMaterialColor(Color(0xFF674ea7)),
 
-  //  primaryColor: Colors.,
-      visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.center_focus_strong,color:createMaterialColor(Color(0xFF674ea7))),
-          backgroundColor: Colors.white,
-          elevation:30 ,
-          onPressed: (){
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Scan()),
-            );
-          },
-
+          //  primaryColor: Colors.,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          home: Scaffold(
+            floatingActionButton: FloatingActionButton(
+                child: Icon(Icons.center_focus_strong,color:createMaterialColor(Color(0xFF674ea7))),
+                backgroundColor: Colors.white,
+                elevation:30 ,
+                onPressed: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Scan()),
+                  );
+                  },
+
+            ),
+            floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       //  appBar: AppBar(title:Text('Bubble'),),
 
         //Third one
@@ -104,27 +108,27 @@ class MyAppState extends State<MyApphome>{
 
 
       //Second one
-        bottomNavigationBar: BottomAppBar(
+              bottomNavigationBar: BottomAppBar(
 
-          child: IconTheme(
-            data: IconThemeData(color:_back_col),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                mainAxisSize: MainAxisSize.max,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.home),
-                  color: Colors.white,
-                  onPressed: (){
-                    setState(() {
-                      _selectedPage=4;
-                      _back_col = Colors.white;
-                    });
-                  },
-                  splashColor: Colors.purple[50],
+                child: IconTheme(
+                  data: IconThemeData(color:_back_col),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisSize: MainAxisSize.max,
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.home),
+                        color: Colors.white,
+                        onPressed: (){
+                          setState(() {
+                            _selectedPage=4;
+                            _back_col = Colors.white;
+                          });
+                        },
+                        splashColor: Colors.purple[50],
 
-                ),
+                      ),
                // Spacer(),
 //                IconButton(
 //
@@ -138,73 +142,179 @@ class MyAppState extends State<MyApphome>{
 //                  onPressed: (){},
 //                ),
           // Spacer(),
-                IconButton(
-                  color: Colors.white,
-                  icon: Icon(Icons.settings),
-                  onPressed: (){
-                  setState(() {
-                  _selectedPage=3;
-                  _back_col = Colors.white;
-                     });
-                  },
-                  splashColor: Colors.purple[50],
-                )
-              ],
-            ),
-          ),
+                      IconButton(
+                        color: Colors.white,
+                        icon: Icon(Icons.settings),
+                        onPressed: (){
+                        setState(() {
+                        _selectedPage=3;
+                        _back_col = Colors.white;
+                           });
+                        },
+                        splashColor: Colors.purple[50],
+                      )
+                    ],
+                  ),
+                ),
 
-         color:createMaterialColor(Color(0xFF674ea7)),
+                  color:createMaterialColor(Color(0xFF674ea7)),
 
-            shape:CircularNotchedRectangle(),
-            notchMargin:8.0,
+                  shape:CircularNotchedRectangle(),
+                  notchMargin:8.0,
+              ),
 
-        ),
-
-      //First one normal
-      body: _pageOptions[_selectedPage],
-
+              //First one normal
+               body: _pageOptions[_selectedPage],
 
 
 
-      )
-    );
-  } 
+
+            )
+          );
+        }
   
   else  {
  
    return MaterialApp( 
       title: 'Bubble shop',
       theme: ThemeData(
-
-     primarySwatch: createMaterialColor(Color(0xFF674ea7)),
+        primarySwatch: createMaterialColor(Color(0xFF674ea7)),
 
   //  primaryColor: Colors.,
-      visualDensity: VisualDensity.adaptivePlatformDensity,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Scaffold(
+        backgroundColor: Color(0xFF674ea7),
         body:
-    Container(
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 30 , top: 70),
+                  child:CircleAvatar(
+                    radius: 50,
+                    backgroundImage: AssetImage('assets/images/logo.png'),
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(left: 10 , top: 70),
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                       children: <Widget>[
+                         Text(
+                           "WELCOME  TO",
+                           style: TextStyle(
+                             fontWeight: FontWeight.bold,
+                             color: Colors.white,
+                             fontSize:20,
+                           ),
+                         ),
+                       ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            "GroomAR",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize:36,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                ),
+              ],
+            ),
+
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                margin: EdgeInsets.only(top: 40),
+                decoration:BoxDecoration(
+                    color: Color(0xffEFEFEF),
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/prof1.jpg'),
+                      fit: BoxFit.cover,
+                    ),
+                    borderRadius:BorderRadius.vertical(top:Radius.circular(34))
+                ),
+
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children:<Widget> [
+                      Container(
+                        padding: const EdgeInsets.only(top:10),
+                        child:Text(
+                          "Please Login to Continue.....",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Color(0xFF674ea7),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height:300),
+                      Padding(
+                        padding: const EdgeInsets.only(left:120),
+                        child: NiceButton(
+                          radius: 40,
+                          padding: const EdgeInsets.all(5),
+                          text: "Google SignIn",
+                          gradientColors: [secondColor, firstColor],
+                          onPressed: () {
+                            _handleSignIn().then((value) => {
+                              setState((){
+                                isLoggin = true;
+                              })
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  )
+              ),
+
+
+
+
+            ),
+
+          ],
+
+        ),
+          /*Container(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children:<Widget> [
                 Text("Login Here"),
                 RaisedButton(onPressed: (){
                   _handleSignIn().then((value) => {
                     setState(() {
                       isLoggin = true;
-     
-    })
+                    })
                   }
                   );
                   },
                  child: Text("Google Signin"),)
-              ],
+                ],
             )
-          ),
+          ),*/
+
       )
    );
 
-}
+  }
 
   }
 
@@ -213,7 +323,8 @@ class MyAppState extends State<MyApphome>{
   Widget build(BuildContext context) {
     return 
     getHome();
-    
+
+
   }
 }
 /*
