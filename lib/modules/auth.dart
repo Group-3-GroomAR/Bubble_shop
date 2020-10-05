@@ -3,16 +3,36 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 
 class AuthService {
-  final GoogleSignIn _googleSignIn=GoogleSignIn();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn=GoogleSignIn();
+  final FirebaseAuth auth = FirebaseAuth.instance;
+   FirebaseUser user ;
 
-//  //constructor
+ Future<FirebaseUser> getUser() async{
+   
+  //  print("user:");
+  //  print(user);
+    return user;
+
+  }
+
+  // getUid(){
+  //   return this.auth.currentUser().
+  // }
+
+  Future<Null> signOutWithGoogle() async {
+  // Sign out with firebase
+  await this.auth.signOut();
+  // Sign out with google
+  await this.googleSignIn.signOut();
+  print("signedout");
+}
+ //constructo
 //  AuthService(){
-//
+// //  getUser();
 //  }
 // ignore: unused_element
-Future<FirebaseUser> _handleSignIn() async {
-    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+Future<FirebaseUser> handleSignIn() async {
+    final GoogleSignInAccount googleUser = await googleSignIn.signIn();
     final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
     final AuthCredential credential = GoogleAuthProvider.getCredential(
@@ -20,7 +40,7 @@ Future<FirebaseUser> _handleSignIn() async {
       idToken: googleAuth.idToken,
     );
 
-    final FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
+    this.user = (await auth.signInWithCredential(credential)).user;
     print("signed in " + user.displayName);
     return user;
   }

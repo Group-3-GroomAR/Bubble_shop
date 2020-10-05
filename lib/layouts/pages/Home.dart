@@ -4,6 +4,7 @@ import 'package:bubble_saloon/firstscreen.dart';
 import 'package:bubble_saloon/layouts/forms/form_page3.dart';
 import 'package:bubble_saloon/layouts/pages/S_home.dart';
 import 'package:bubble_saloon/layouts/pages/Settings.dart';
+import 'package:bubble_saloon/modules/auth.dart';
 
 import 'package:flutter/material.dart';
 import 'Appointments/Calendar.dart';
@@ -28,9 +29,13 @@ class MyApphome extends StatefulWidget {
 
 class MyAppState extends State<MyApphome>{
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-   final GoogleSignIn _googleSignIn = GoogleSignIn();
- 
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
+  //  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  static var u =false;
+  // var myuser = AuthService().getUser().then((value) => u = value.isAnonymous);
+     
+// var myuser2 = AuthService().getUser();
+     
 
   bool isLoggin=false;
 
@@ -48,33 +53,59 @@ class MyAppState extends State<MyApphome>{
 
   ];
   
-   Future<FirebaseUser> _handleSignIn() async {
-    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+  //  Future<FirebaseUser> _handleSignIn() async {
+  //   final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+  //   final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
+  //   final AuthCredential credential = GoogleAuthProvider.getCredential(
+  //     accessToken: googleAuth.accessToken,
+  //     idToken: googleAuth.idToken,
+  //   );
 
-    final FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
-    print("signed in " + user.displayName);
-    return user;
-  }
+  //   final FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
+  //   print("signed in " + user.displayName);
+  //   return user;
+  // }
 
-
+<<<<<<< HEAD
   Widget getHome() {
+=======
  
-  if (isLoggin) {
+   Widget getHome() {
+>>>>>>> d831c6eaf674ce4bc5a2af3e37c3c524512d5e4f
+ 
+  // ignore: unrelated_type_equality_checks
+  if (true) {
  
        return MaterialApp( 
           title: 'Bubble shop',
           theme: ThemeData(
 
+<<<<<<< HEAD
           primarySwatch: createMaterialColor(Color(0xFF674ea7)),
 
           //  primaryColor: Colors.,
           visualDensity: VisualDensity.adaptivePlatformDensity,
+=======
+     primarySwatch: createMaterialColor(Color(0xFF674ea7)),
+
+  //  primaryColor: Colors.,
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.center_focus_strong,color:createMaterialColor(Color(0xFF674ea7))),
+          backgroundColor: Colors.white,
+          elevation:30 ,
+          onPressed: (){
+            setState(() {
+              _selectedPage=2;
+
+            });
+          },
+          // onPressed:() =>AuthService().signOutWithGoogle()
+        
+>>>>>>> d831c6eaf674ce4bc5a2af3e37c3c524512d5e4f
         ),
           home: Scaffold(
             floatingActionButton: FloatingActionButton(
@@ -299,6 +330,7 @@ class MyAppState extends State<MyApphome>{
               children:<Widget> [
                 Text("Login Here"),
                 RaisedButton(onPressed: (){
+<<<<<<< HEAD
                   _handleSignIn().then((value) => {
                     setState(() {
                       isLoggin = true;
@@ -306,6 +338,17 @@ class MyAppState extends State<MyApphome>{
                   }
                   );
                   },
+=======
+                 AuthService().handleSignIn();
+    //               .then((value) => {
+    //                 setState(() {
+    //                   isLoggin = true;
+     
+    // })
+                  // }
+                // );
+              },
+>>>>>>> d831c6eaf674ce4bc5a2af3e37c3c524512d5e4f
                  child: Text("Google Signin"),)
                 ],
             )
@@ -321,6 +364,7 @@ class MyAppState extends State<MyApphome>{
 
   @override
   Widget build(BuildContext context) {
+    // print(myuser);
     return 
     getHome();
 

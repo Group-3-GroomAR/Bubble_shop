@@ -1,19 +1,19 @@
 const express = require("express");
 const mysql = require('mysql2/promise');
 const bodyparser = require('body-parser');
-const userRout = express.Router();
+
  
 
 let db = null;
 const app = express();
 
-app.use('/test',userRout);
+
 app.use(express.json());
 
-userRout.route('/test1').post(function (req,res){
-  console.log("working pa");
 
-})
+
+
+
 
 app.get('/shop',async(req,res,next)=>{
   console.log("HIII");
@@ -47,13 +47,71 @@ app.get('/t', function (req, res) {
   res.send('hello world')
 });
 
+app.get('/gettoday', async (req, res, next) => {
+  var obj=JSON.parse(req.query.data);
+  var today= new Date();
+
+
+  //inner join
+  var query2 = `SELECT * FROM reservation
+               INNER JOIN ref_reservation USING (id)
+               INNER JOIN service USING (service_id)
+               WHERE reservation.salon_id='${obj.uid}'
+               `
+  
+const [rows] = await db.query(query2);
+  //console.log(rows[0]);
+  res.json(rows);
+   next();
+});
+
+
+app.get('/getreservation', async (req, res, next) => {
+  var obj=JSON.parse(req.query.data);
+  
+ 
+  // const email = req.body.email;
+  // const password  = req.body.password;
+
+  // const [rows] = await db.query("SELECT * FROM reservation where salon_id='ax3';");
+
+  //query from 2 tables
+  var query1 = `SELECT * FROM reservation,ref_reservation WHERE reservation.id = ref_reservation.id `
+
+  //inner join
+  var query2 = `SELECT * FROM reservation
+               INNER JOIN ref_reservation USING (id)
+               INNER JOIN service USING (service_id)
+               WHERE reservation.salon_id='${obj.uid}'
+               `
+  var query3 = `SELECT *, (SELECT GROUP_CONCAT(service_name) FROM service WHERE service.service_id = ref_reservation.service_id) AS servicelist
+  FROM reservation
+  INNER JOIN ref_reservation USING (id)
+  INNER JOIN service USING (service_id)
+  WHERE reservation.salon_id='${obj.uid}'
+  `
+
+  //this query is the last one which grp the services
+  var q4 = `SELECT reservation.*, GROUP_CONCAT(service.service_name SEPARATOR ', ') as services 
+  FROM service 
+  INNER JOIN ref_reservation USING (service_id) 
+  INNER JOIN reservation USING (id) 
+  WHERE reservation.salon_id='${obj.uid}' AND date(date) >= CURRENT_DATE
+  GROUP BY ref_reservation.id`
+
+
+const [rows] = await db.query(q4);
+console.log(rows);
+  res.json(rows);
+   next();
+});
 
 app.get('/getuser', async (req, res, next) => {
 
   // const email = req.body.email;
   // const password  = req.body.password;
 
-  const [rows] = await db.query("SELECT * FROM salon;");
+  const [rows] = await db.query("SELECT * FROM salon ;");
   
 
   //console.log(rows[0]);
@@ -61,14 +119,6 @@ app.get('/getuser', async (req, res, next) => {
    next();
 });
 
-app.post('/t2',function(req,res){
-  let testing=req.body;
-  var querye = "INSERT INTO testdb (name,email,age) VALUES ('pruthi', 'pruthi@gmail.com',12)";
-  db.query(querye,function (err, result) {
-    if (err) throw err;
-        console.log(result.affectedRows + " record inserted");
-  });
-});
 
 app.post('/learners', (req, res) => {
   let learner = req.body;
@@ -90,7 +140,7 @@ async function main(){
     host:'localhost',
     user: 'root',
     password: '',
-    database: 'groomar',
+    database: 'newgroomar',
     
     // localAddress:'http://localhost:80'
     

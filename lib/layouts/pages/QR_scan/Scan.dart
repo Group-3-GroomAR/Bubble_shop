@@ -14,6 +14,7 @@ class Scan extends StatefulWidget {
 class _ScanState extends State<Scan> {
   String qrCodeResult = "Not Yet Scanned";
   String response = "";
+<<<<<<< HEAD
   var myid="ax3";
   Color c;
 
@@ -36,11 +37,20 @@ class _ScanState extends State<Scan> {
       });
     }
   }
+=======
+  //
+  // checkScan(code) async{
+  //   var result = await http_post("checkScan", {
+  //    "resnumber" = code.toString();
+  //   });
+  // }
+>>>>>>> d831c6eaf674ce4bc5a2af3e37c3c524512d5e4f
 
   @override
   Widget build(BuildContext context) {
     return
       Scaffold(
+<<<<<<< HEAD
           appBar:AppBar(
             title: Text('QR SCANNING'),
             centerTitle: true,
@@ -123,6 +133,23 @@ class _ScanState extends State<Scan> {
                 //     onPressed:, icon:Icon(Icons.check_circle) ,
                 //     label:Text("Confirm"))
               ],
+=======
+      appBar:AppBar(
+        title: Text('QR SCANNING'),
+        centerTitle: true,
+      ),
+      body: Container(
+        padding: EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+
+          children: <Widget>[
+            Text(
+              "Result",
+                style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center
+>>>>>>> d831c6eaf674ce4bc5a2af3e37c3c524512d5e4f
             ),
           )
 
