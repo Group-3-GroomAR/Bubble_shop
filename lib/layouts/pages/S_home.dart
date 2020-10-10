@@ -1,4 +1,7 @@
+import 'package:bubble_saloon/layouts/forms/form_page1.dart';
+import 'package:bubble_saloon/layouts/forms/form_page2.dart';
 import 'package:bubble_saloon/layouts/modals/Reservation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bubble_saloon/modules/http.dart';
@@ -12,9 +15,11 @@ class SaloonHome extends StatefulWidget
 // ignore: camel_case_types
 class s_homestate extends  State<SaloonHome> {
   bool showrefresh = false;
-  var myid="ax3";
+  var myid;
   var today=new DateTime.now();
    List<Reservation> reservations = [];
+   int totAp=0 ;
+   int comAp=0;
    
   // bool compareDate(dateobj){
   //   print(dateobj.day == today.day);
@@ -41,20 +46,46 @@ class s_homestate extends  State<SaloonHome> {
                  resv['start_time'],
               resv['total'],
              resv['end_time'],
-             resv['customer_id']
+             resv['customer_id'],
+             resv['customer_name'],
+    resv['Status']
 
 
           ));
          
         });
+
+
+        reservations.forEach((element) {
+          if(element.date.day == new DateTime.now().day && element.date.month == new DateTime.now().month && element.date.year == new DateTime.now().year){
+            totAp =totAp+1;
+
+            if(element.Status==1){
+              comAp =comAp+1;
+            }
+          }
+
+
+
+        });
       });
+
+      print(totAp);
     }
   }
   String response = "";
  
  @override
  void initState() {
-  //  this.refreshReserv();
+
+
+   final FirebaseAuth auth = FirebaseAuth.instance;
+   auth.currentUser().then((value) {
+     myid = value.uid;
+     print(myid);
+     refreshReserv();
+   } );
+
     super.initState();
   }
 
@@ -101,14 +132,14 @@ class s_homestate extends  State<SaloonHome> {
                     Column(
                       children: [
                         Text("Total",style: TextStyle(color: Colors.white),),
-                        Text("12",style:TextStyle(fontSize: 30,color: Colors.white),)
+                        Text(totAp.toString(),style:TextStyle(fontSize: 30,color: Colors.white),)
                       ],
                     ),
                     Column(
                       children: [
 
                         Text("Completed",style: TextStyle(color: Colors.white),),
-                        Text("3",style:TextStyle(fontSize:30,color: Colors.white),)
+                        Text(comAp.toString(),style:TextStyle(fontSize:30,color: Colors.white),)
                       ],
 
                     ),
@@ -175,7 +206,7 @@ class s_homestate extends  State<SaloonHome> {
               crossAxisAlignment: CrossAxisAlignment.start,
              
               children: [
-                Text(reservations[i].customer_id),
+                Text(reservations[i].customer_name),
                 Text(reservations[i].service_name),
              Text(reservations[i].setDate()),
               
@@ -250,8 +281,18 @@ class s_homestate extends  State<SaloonHome> {
               ],
             ),
           ),
-
-
+Padding(
+  padding: EdgeInsets.symmetric(vertical: 20.0),
+),
+         // FlatButton(onPressed:() {
+         //
+         //
+         //   // print()
+         //   // Navigator.push(
+         //   //     context,
+         //   //     MaterialPageRoute(builder: (context) => MyCustomForm1())
+         //   // );
+         // }, child:Text("Test"))
         ],
       )
       )

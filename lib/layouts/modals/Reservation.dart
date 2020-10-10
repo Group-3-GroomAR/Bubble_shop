@@ -4,17 +4,26 @@ class Reservation{
   int _resID;
   String _salon_id;
   String customer_id;
+  String customer_name;
   int _total;
   DateTime _date;
-  String _start_time;
+  String start_time;
   int service_id;
   String service_name ;
-  
+  int Status;
   int _duration;
   String end_time;
-   
+  int refNumber;
+
+
 
   int get resID => _resID;
+
+  int setRef (var id){
+    refNumber =(id *99) -  60;
+
+    return refNumber;
+  }
 
   String setDate (){
     var day = _date.day;
@@ -26,7 +35,7 @@ class Reservation{
     return mydate;
   }
 
- Reservation(this._resID,this.service_name,this._date,this._duration,this._start_time,this._total,this.end_time,this.customer_id);
+ Reservation(this._resID,this.service_name,this._date,this._duration,this.start_time,this._total,this.end_time,this.customer_id,this.customer_name,this.Status);
 
   DateTime get date => _date;
 

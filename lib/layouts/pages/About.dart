@@ -10,7 +10,12 @@ class About extends StatelessWidget {
 
       ),
       body: Center(
-          child:Text("About")
+          child:Column(
+            children: [
+             Text("hi"),
+              Text("data")
+            ],
+          )
       ),
 
 

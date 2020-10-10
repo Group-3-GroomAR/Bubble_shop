@@ -1,6 +1,8 @@
+import 'package:bubble_saloon/layouts/forms/form_page1.dart';
 import 'package:bubble_saloon/layouts/pages/About.dart';
 import 'package:bubble_saloon/layouts/pages/Appointments/Calendar.dart';
 import 'package:bubble_saloon/layouts/pages/Appointments/Upcoming.dart';
+import 'package:bubble_saloon/layouts/pages/CheckSummary/CheckSummary.dart';
 import 'package:bubble_saloon/layouts/pages/Help.dart';
 import 'package:bubble_saloon/layouts/pages/Logout.dart';
 import 'package:bubble_saloon/layouts/pages/Profile.dart';
@@ -9,6 +11,8 @@ import 'package:bubble_saloon/layouts/pages/Manage.dart';
 // import 'package:bubble_saloon/layouts/pages/Payment.dart';
 
 import 'package:flutter/material.dart';
+
+import 'Appointments/Chart.dart';
 
 class Settings extends StatelessWidget {
 
@@ -49,35 +53,38 @@ class Settings extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) =>Profile()),
+                        MaterialPageRoute(builder: (context) =>MyCustomForm1()),
                       );
                     },
                   ),
                   _buildDivider(),
-                  ListTile(
-                    title: Text("Manage Blogs"),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) =>Manage()),
-                      );
-                    },
-                    trailing: Icon(Icons.arrow_right),
-
-                  ),
-                  ListTile(
-                    title: Text("Customer Reviews"),
-                    onTap: () {},
-                    trailing: Icon(Icons.arrow_right),
-                  ),
-                  ListTile(
-                    title: Text("Offers/Events"),
-                    onTap: () {},
-                    trailing: Icon(Icons.arrow_right),
-                  ),
+                  // ListTile(
+                  //   title: Text("Manage Blogs"),
+                  //   onTap: () {
+                  //     Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(builder: (context) =>Manage()),
+                  //     );
+                  //   },
+                  //   trailing: Icon(Icons.arrow_right),
+                  //
+                  // ),
+                  // ListTile(
+                  //   title: Text("Customer Reviews"),
+                  //   onTap: () {},
+                  //   trailing: Icon(Icons.arrow_right),
+                  // ),
+                  // ListTile(
+                  //   title: Text("Offers/Events"),
+                  //   onTap: () {},
+                  //   trailing: Icon(Icons.arrow_right),
+                  // ),
                   ListTile(
                     title: Text("Check Summary"),
-                    onTap: () {},
+                    onTap: () { Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) =>  Chart())
+                    );},
                     trailing: Icon(Icons.arrow_right),
                   ),
                 ],
@@ -141,18 +148,18 @@ class Settings extends StatelessWidget {
                     },
                     trailing: Icon(Icons.arrow_right),
                   ),
-
-                  ListTile(
-                    leading: Icon(Icons.info_outline),
-                    title: Text("About"),
-                    onTap: (){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => About())
-                      );
-                    },
-                    trailing: Icon(Icons.arrow_right),
-                  ),
+                  //
+                  // ListTile(
+                  //   leading: Icon(Icons.info_outline),
+                  //   title: Text("About"),
+                  //   onTap: (){
+                  //     Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(builder: (context) => About())
+                  //     );
+                  //   },
+                  //   trailing: Icon(Icons.arrow_right),
+                  // ),
                   ListTile(
                     leading: Icon(Icons.exit_to_app),
                     title: Text("Logout"),

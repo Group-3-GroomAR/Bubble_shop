@@ -1,6 +1,8 @@
 //  Copyright (c) 2019 Aleksander Woźniak
 //  Licensed under Apache License v2.0
 
+import 'package:bubble_saloon/modules/http.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -44,64 +46,92 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
   AnimationController _animationController;
   CalendarController _calendarController;
 
+  //new code
+  var myid;
+  var now = new DateTime.now();
+  var dateSet = [];
+  var mydates =[];
+  var myduration = [];
+  var resId = [];
+
+
+
+  Future<void> getDate() async{
+    var result = await http_get("getDates", {
+      "uid": myid,
+
+    });
+
+    if(result.ok)
+    {
+      setState(() {
+        dateSet.clear();
+        var apDate = result.data as List<dynamic>;
+        apDate.forEach((ap) {
+          dateSet.add(ap['date']);
+          resId.add(ap['id']);
+        });
+      });
+    }
+    dateSet.forEach((date) {
+    var cdate = DateTime.parse(date);
+      mydates.add(cdate);
+    });
+
+    mydates.forEach((el) {
+
+      var duration = el.difference(now);
+      myduration.add(duration.inDays);
+
+    });
+
+    myduration.forEach((du) {
+
+        _events = {
+          now.add(Duration(days:du)): ['Event A6', 'Event B6'],
+        };
+
+    });
+
+    print(dateSet);
+    print(resId);
+    print(myduration);
+    print(mydates);
+    print(_events.runtimeType);
+  }
+
   @override
   void initState() {
     super.initState();
     final _selectedDay = DateTime.now();
     final dateTime = DateTime.now();
 
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    auth.currentUser().then((value) {
+      myid = value.uid;
+      print(myid);
+    } );
+    //new one
+    // Dates.forEach((date) {
+    // var cdate = DateTime.parse(date);
+    //   mydates.add(cdate);
+    // });
+
+    getDate();
+
+    //define events as dots
+
     _events = {
-      _selectedDay.subtract(Duration(days: 30)): [
-        'Event A0',
-        'Event B0',
-        'Event C0'
-      ],
-      _selectedDay.subtract(Duration(days: 27)): ['Event A1'],
-      _selectedDay.subtract(Duration(days: 20)): [
-        'Event A2',
-        'Event B2',
-        'Event C2',
-        'Event D2'
-      ],
-      _selectedDay.subtract(Duration(days: 16)): ['Event A3', 'Event B3'],
-      _selectedDay.subtract(Duration(days: 10)): [
-        'Event A4',
-        'Event B4',
-        'Event C4'
-      ],
-      _selectedDay.subtract(Duration(days: 4)): [
-        'Event A5',
-        'Event B5',
-        'Event C5'
-      ],
-      _selectedDay.subtract(Duration(days: 2)): ['Event A6', 'Event B6'],
-      _selectedDay: ['Event A7', 'Event B7', 'Event C7', 'Event D7'],
-      _selectedDay.add(Duration(days: 1)): [
+
+
+      _selectedDay.subtract(Duration(days: 20)): ['Event A6', 'Event B6'],
+      _selectedDay: ['Event A7', 'Event B7'],
+      _selectedDay.add(Duration(days: 43)): [
         'Event A8',
-        'Event B8',
-        'Event C8',
-        'Event D8'
+
+        // 'Event D8'
       ],
-      _selectedDay.add(Duration(days: 3)):
-          Set.from(['Event A9', 'Event A9', 'Event B9']).toList(),
-      _selectedDay.add(Duration(days: 7)): [
-        'Event A10',
-        'Event B10',
-        'Event C10'
-      ],
-      _selectedDay.add(Duration(days: 11)): ['Event A11', 'Event B11'],
-      _selectedDay.add(Duration(days: 17)): [
-        'Event A12',
-        'Event B12',
-        'Event C12',
-        'Event D12'
-      ],
-      _selectedDay.add(Duration(days: 22)): ['Event A13', 'Event B13'],
-      _selectedDay.add(Duration(days: 26)): [
-        'Event A14',
-        'Event B14',
-        'Event C14'
-      ],
+
     };
 
     _selectedEvents = _events[_selectedDay] ?? [];

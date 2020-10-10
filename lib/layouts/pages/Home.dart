@@ -25,14 +25,9 @@ class MyApphome extends StatefulWidget {
 
 
 class MyAppState extends State<MyApphome>{
-
-  // final FirebaseAuth _auth = FirebaseAuth.instance;
-  //  final GoogleSignIn _googleSignIn = GoogleSignIn();
   static var u =false;
-  // var myuser = AuthService().getUser().then((value) => u = value.isAnonymous);
-     
-// var myuser2 = AuthService().getUser();
-     
+  var myid;
+
 
   bool isLoggin=false;
 
@@ -45,33 +40,18 @@ class MyAppState extends State<MyApphome>{
        Scan(),
        Settings(),
        SaloonHome()
-
-
   ];
   
-  //  Future<FirebaseUser> _handleSignIn() async {
-  //   final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-  //   final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-
-  //   final AuthCredential credential = GoogleAuthProvider.getCredential(
-  //     accessToken: googleAuth.accessToken,
-  //     idToken: googleAuth.idToken,
-  //   );
-
-  //   final FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
-  //   print("signed in " + user.displayName);
-  //   return user;
-  // }
 
  
    Widget getHome() {
  
   // ignore: unrelated_type_equality_checks
-  if (true) {
- 
+  if (myid != null) {
+
        return MaterialApp( 
-      title: 'Bubble shop',
-      theme: ThemeData(
+        title: 'Bubble shop',
+        theme: ThemeData(
 
      primarySwatch: createMaterialColor(Color(0xFF674ea7)),
 
@@ -93,21 +73,6 @@ class MyAppState extends State<MyApphome>{
         
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      //  appBar: AppBar(title:Text('Bubble'),),
-
-        //Third one
-//        bottomNavigationBar: FABBottomAppBar(
-//          m_height:60.0 ,
-//          m_color:createMaterialColor(Color(0xFF674ea7)),
-//
-//          onTabSelected: _selectedTab,
-//          items: [
-//            FABBottomAppBarItem(iconData: Icons.menu, text: 'This'),
-//            FABBottomAppBarItem(iconData: Icons.layers, text: 'Is'),
-//            FABBottomAppBarItem(iconData: Icons.dashboard, text: 'Bottom'),
-//            FABBottomAppBarItem(iconData: Icons.info, text: 'Bar'),
-//          ],
-//        ),
 
 
       //Second one
@@ -132,19 +97,7 @@ class MyAppState extends State<MyApphome>{
                   splashColor: Colors.purple[50],
 
                 ),
-               // Spacer(),
-//                IconButton(
-//
-//                  icon: Icon(Icons.add_location),
-//                  onPressed: (){},
-//                ),
-            // Spacer(),
-//                IconButton(
-//
-//                  icon: Icon(Icons.audiotrack),
-//                  onPressed: (){},
-//                ),
-          // Spacer(),
+
                 IconButton(
                   color: Colors.white,
                   icon: Icon(Icons.settings),
@@ -179,7 +132,7 @@ class MyAppState extends State<MyApphome>{
   
   else  {
  
-   return MaterialApp( 
+   return MaterialApp(
       title: 'Bubble shop',
       theme: ThemeData(
 
@@ -189,25 +142,34 @@ class MyAppState extends State<MyApphome>{
       visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Scaffold(
+        backgroundColor: Colors.white,
         body:
     Container(
-            child: Column(
+            child:Center(
+              child:
+            Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children:<Widget> [
-                Text("Login Here"),
-                RaisedButton(onPressed: (){
+                Image.asset('assets/images/logo.png',width:230,height: 230,),
+                RaisedButton(
+                  onPressed: (){
                  AuthService().handleSignIn();
     //               .then((value) => {
     //                 setState(() {
     //                   isLoggin = true;
-     
+
     // })
                   // }
                 // );
               },
-                 child: Text("Google Signin"),)
+                 child: Text("Google Signin",style: TextStyle(color: Colors.white),),
+                  color: Colors.deepPurple[300],
+
+                ),
+
+
               ],
-            )
+            ))
           ),
       )
    );
@@ -216,114 +178,31 @@ class MyAppState extends State<MyApphome>{
 
   }
 
+  void initState() {
+
+
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    auth.currentUser().then((value) {
+      setState(() {
+        myid = value.uid;
+      });
+
+      print(myid);
+
+    } );
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    // print(myuser);
+
     return 
     getHome();
     
   }
 }
-/*
-class FABBottomAppBarItem {
-  FABBottomAppBarItem({this.iconData, this.text});
-  IconData iconData;
-  String text;
-}
 
-class FABBottomAppBar extends StatefulWidget {
- final  List<FABBottomAppBarItem>items;
- final ValueChanged<int> onTabSelected;
- final double m_height ;
- final double m_iconsize;
- final Color m_color;
- final Color m_selectedColor;
-
-
-  const FABBottomAppBar({Key key, this.items, this.onTabSelected, this.m_height, this.m_iconsize, this.m_color, this.m_selectedColor}) : super(key: key);
-
- Color get selectedColor {
-   return m_selectedColor;
- }
-
- Color get color {
-   return m_color;
- }
-
- double get height{
-   return m_height;
- }
-
-  double get iconSize{
-   return m_iconsize;
-  }
-
-  @override
-  State<StatefulWidget> createState() => FABBottomAppBarState();
-}
-
-class FABBottomAppBarState extends State<FABBottomAppBar> {
-  int _selectedIndex = 0;
-
-  _updateIndex(int index) {
-    widget.onTabSelected(index);
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    List<Widget> items = List.generate(widget.items.length, (int index) {
-      return _buildTabItem(
-        item: widget.items[index],
-        index: index,
-        onPressed: _updateIndex,
-      );
-    });
-
-    return BottomAppBar(
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: items,
-      ),
-    );
-  }
-
-  Widget _buildTabItem({
-    FABBottomAppBarItem item,
-    int index,
-    ValueChanged<int> onPressed,
-  }) {
-    Color color = _selectedIndex == index ? widget.selectedColor : widget.color;
-    return Expanded(
-      child: SizedBox(
-        height: widget.height,
-        child: Material(
-          type: MaterialType.transparency,
-          child: InkWell(
-            onTap: () => onPressed(index),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Icon(item.iconData, color: color, size: widget.iconSize),
-                Text(
-                  item.text,
-                  style: TextStyle(color: color),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-}
-*/
 
 //creating custom color
 MaterialColor createMaterialColor(Color color) {

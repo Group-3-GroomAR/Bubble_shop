@@ -2,6 +2,7 @@
 
 import 'package:bubble_saloon/layouts/modals/Reservation.dart';
 import 'package:bubble_saloon/modules/http.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
  
 void main() => runApp(UpcomingRes());
@@ -14,8 +15,9 @@ class UpcomingRes extends StatefulWidget {
 }
 
 class _UpcomingResState extends State<UpcomingRes> {
-   var myid="ax3";
+   var myid;
    List<Reservation> reservations = [];
+
   Future<void> refreshReserv()async{
     var result = await http_get("getreservation",{
       "uid": myid,
@@ -23,6 +25,7 @@ class _UpcomingResState extends State<UpcomingRes> {
     print("requested");
     if(result.ok)
     {
+      print(result.data);
       setState(() {
         reservations.clear();
         var inReservations = result.data as List<dynamic>;
@@ -36,15 +39,32 @@ class _UpcomingResState extends State<UpcomingRes> {
               res['total'],
              res['end_time'],
            
-             res['customer_id']
+             res['customer_id'],
+            res['customer_name'],
+            res['Status']
 
 
           ));
         });
       });
+
+
     }
    print(reservations.length);
   }
+
+   void initState() {
+
+
+     final FirebaseAuth auth = FirebaseAuth.instance;
+     auth.currentUser().then((value) {
+       myid = value.uid;
+       print(myid);
+       refreshReserv();
+     } );
+
+     super.initState();
+   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,15 +89,21 @@ class _UpcomingResState extends State<UpcomingRes> {
         child: ListView.separated(
           itemCount: reservations.length,
           itemBuilder: (context, i) => ListTile(
-            leading: Icon(Icons.event),
+
+            leading: CircleAvatar(
+              child: Icon(Icons.today),
+              radius: 30.0,
+            ),
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
              
               children: [
-                 Text(reservations[i].customer_id),
+                Text("Reference : "+ reservations[i].setRef(reservations[i].resID).toString()),
+                 Text("Customer Name : "+reservations[i].customer_name),
                 Text(reservations[i].service_name),
              Text(reservations[i].setDate()),
-             Text(reservations[i].resID.toString()),
+                Text(reservations[i].start_time.toString()),
+
 
             
               

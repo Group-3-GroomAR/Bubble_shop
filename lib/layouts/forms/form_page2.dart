@@ -1,7 +1,11 @@
+import 'package:bubble_saloon/layouts/modals/User.dart';
 import 'package:bubble_saloon/test.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bubble_saloon/modules/http.dart';
+
+import 'form_page1.dart';
+import 'form_page3.dart';
 
 
 class MyCustomForm extends StatefulWidget
@@ -23,6 +27,8 @@ class customformstate extends  State<MyCustomForm> {
   String _location;
   String _mobile;
   String _certifiednumber;
+
+  User salonUser;
 
   createUser() async {
    print(_email);
@@ -54,7 +60,7 @@ class customformstate extends  State<MyCustomForm> {
         appBar: new AppBar(
           backgroundColor:(Color(0xFF674ea7)),
           title: new Text(
-            'REGISTRATION FORM',
+            'Edit Profile',
           ),
         ),
         body: new SingleChildScrollView(
@@ -96,6 +102,7 @@ class customformstate extends  State<MyCustomForm> {
         ),
         //getting location
         new TextFormField(
+
           decoration: const InputDecoration(labelText: 'Location'),
           keyboardType: TextInputType.text,
           validator: validateLocation,
@@ -142,37 +149,61 @@ class customformstate extends  State<MyCustomForm> {
         ),*/
 
 
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
-          child: Row(
-            children: <Widget>[
-              Checkbox(
-                value: _agreedToTOS,
-                onChanged: _setAgreedToTOS,
-              ),
-              GestureDetector(
-                onTap: () => _setAgreedToTOS(!_agreedToTOS),
-                child: const Text(
-                  'As a Salon Owner I will send all\n'
-                      'the document and I agree to \n'
-                      'the Terms of Services and Privacy \n'
-                      'Policy behalf of Salon....',
-                ),
-              ),
-            ],
-          ),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.symmetric(vertical: 16.0),
+        //   child: Row(
+        //     children: <Widget>[
+        //       Checkbox(
+        //         value: _agreedToTOS,
+        //         onChanged: _setAgreedToTOS,
+        //       ),
+        //       GestureDetector(
+        //         onTap: () => _setAgreedToTOS(!_agreedToTOS),
+        //         child: const Text(
+        //           'As a Salon Owner I will send all\n'
+        //               'the document and I agree to \n'
+        //               'the Terms of Services and Privacy \n'
+        //               'Policy behalf of Salon....',
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
 
 
-        new RaisedButton(
-          onPressed: (){
-            _validateInputs();
-            if(_validateInputs()){
-            createUser();}
-          },
-        //  onPressed: _validateInputs,
-          child: new Text('Submit'),
-        )
+        // new RaisedButton(
+        //   onPressed: (){
+        //     _validateInputs();
+        //     if(_validateInputs()){
+        //     createUser();}
+        //   },
+        // //  onPressed: _validateInputs,
+        //   child: new Text('Submit'),
+        // ),
+        MyCustomForm1(),
+        // Form3(),
+
+        //next button
+        // RaisedButton.icon(
+        //
+        //     onPressed:(){
+        //       _validateInputs();
+        //       if( _validateInputs()){
+        //         // createUser();
+        //         Navigator.push(
+        //             context,
+        //             MaterialPageRoute(builder: (context) =>  MyCustomForm1())
+        //         );
+        //
+        //       }else{
+        //         return null;
+        //       }
+        //     }
+        //
+        //
+        //
+        //
+        //     , icon:Icon(Icons.navigate_next), label:Text("Next")),
       ],
     );
   }

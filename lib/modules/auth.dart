@@ -8,9 +8,9 @@ class AuthService {
    FirebaseUser user ;
 
  Future<FirebaseUser> getUser() async{
-   
   //  print("user:");
   //  print(user);
+  // fDaTajUTXJgKe442t0tuexqhxki1
     return user;
 
   }
@@ -26,7 +26,7 @@ class AuthService {
   await this.googleSignIn.signOut();
   print("signedout");
 }
- //constructo
+//  constructo
 //  AuthService(){
 // //  getUser();
 //  }
