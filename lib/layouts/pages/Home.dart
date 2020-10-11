@@ -37,7 +37,7 @@ class MyAppState extends State<MyApphome>{
   final _pageOptions = [
        Profile(),
        Calendar(),
-       Scan(),
+
        Settings(),
        SaloonHome()
   ];
